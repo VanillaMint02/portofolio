@@ -1,15 +1,31 @@
 import {Module} from '@nestjs/common';
-import {TypeOrmModule} from '@nestjs/typeorm';
+import {InjectDataSource, TypeOrmModule} from '@nestjs/typeorm';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {UserModule} from "./user/user.module";
 import {AuthModule} from "./auth/auth.module";
 import {PortfolioEntryModule} from "./portofolio-entry/portfolio-entry.module";
 import {FileLinkModule} from "./file-link/file-link.module";
+import {DataSource, DataSourceOptions} from "typeorm";
+import * as dotenv from 'dotenv';
+import * as dotenvExpand from 'dotenv-expand';
 
+dotenvExpand.expand(dotenv.config());
+export const dataSourceOptions:DataSourceOptions=({
+    type:'postgres',
+    host:process.env.DATABASE_HOST,
+    port:parseInt(process.env.DATABASE_PORT),
+    username:process.env.DATABASE_USERNAME,
+    password:process.env.DATABASE_PASSWORD,
+    database:process.env.DATABASE_NAME,
+    migrations:['dist/migrations/*{.ts,.js}'],
+    migrationsRun:true,
+    synchronize:true,
+});
 
+export default new DataSource(dataSourceOptions);
 @Module({
     imports: [
-        ConfigModule.forRoot({isGlobal: true}),
+        ConfigModule.forRoot({isGlobal: true,}),
         TypeOrmModule.forRootAsync({
             useFactory: (configService: ConfigService) => ({
                 type: 'postgres',
@@ -21,8 +37,10 @@ import {FileLinkModule} from "./file-link/file-link.module";
                 entities: [],
                 synchronize: configService.get('PRODUCTION_FLAG') === 'false',
                 autoLoadEntities: configService.get('PRODUCTION_FLAG') === 'false',
-                migrationsRun: true,
+                migrations:['dist/migrations/*{.ts,.js}'],
+                migrationsRun:true,
             }),
+
             imports: [ConfigModule],
             inject: [ConfigService],
         }),
@@ -36,3 +54,4 @@ import {FileLinkModule} from "./file-link/file-link.module";
 })
 export class AppModule {
 }
+

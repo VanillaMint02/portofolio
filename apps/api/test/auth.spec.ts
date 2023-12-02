@@ -7,6 +7,7 @@ import {UserService} from "../src/modules/user/user.service";
 import {UserModule} from "../src/modules/user/user.module";
 import * as request from 'supertest';
 import {JwtService} from "@nestjs/jwt";
+import {LoginUserDto} from "../src/modules/user/dto/login-user.dto";
 
 describe("AuthController e2e",()=>{
     let app:INestApplication;
@@ -17,6 +18,8 @@ describe("AuthController e2e",()=>{
             providers:[AuthService,UserService,JwtService]
         }).compile();
         app=moduleFixture.createNestApplication();
+        const globalPrefix='api';
+        app.setGlobalPrefix(globalPrefix);
         await app.init();
     })
     afterAll(async () => {
@@ -24,8 +27,13 @@ describe("AuthController e2e",()=>{
     });
 
     it ('should fail to login an user', async()=>{
+        const loginUserDto:LoginUserDto=new LoginUserDto({
+            email:"KenshinHimura@email.com",
+            password:"KenshinHimuraPassword01?!"
+        });
         return request(app.getHttpServer())
-            .get('/api/auth/login')
+            .post('/api/auth/login')
+            .send(loginUserDto)
             .expect(401);
     })
 })
