@@ -25,8 +25,8 @@ export class FileLinkController {
 
     }
 
-    @Delete('fileLinkId/:fileLinkId')
-    async deleteFileLink(@Param('fileLinkId') id: string): Promise<void> {
-        return await this.fileLinkService.deleteFileLink(id);
+    @Delete('objectKey/:objectKey')
+    async deleteFileLink(@Param('objectKey') objectKey: string): Promise<void> {
+        return await this.fileLinkService.deleteFileLink(objectKey);
     }
 }

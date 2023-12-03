@@ -1,12 +1,10 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn,} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedColumn,} from "typeorm";
 import {PortfolioEntryDomain} from "../../portofolio-entry/domain/portfolio-entry.domain";
 
 @Entity()
 export class FileLinkDomain {
 
-    @PrimaryGeneratedColumn('uuid')
-    id?: string;
-    @Column({nullable: false})
+    @PrimaryColumn({nullable:false})
     objectKey: string;
 
     @Column({nullable: false})
@@ -29,7 +27,6 @@ export class FileLinkDomain {
 
     constructor(values: Partial<FileLinkDomain>) {
         if (values) {
-            this.id = values.id;
             this.objectKey = values.objectKey;
             this.filename = values.filename;
             this.parent = values.parent;

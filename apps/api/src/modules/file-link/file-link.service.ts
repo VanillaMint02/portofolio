@@ -66,8 +66,8 @@ export class FileLinkService {
         }
     }
 
-    async deleteFileLink(id: string): Promise<void> {
-        const deleteResult = await this.fileLinkRepository.delete({id});
+    async deleteFileLink(objectKey: string): Promise<void> {
+        const deleteResult = await this.fileLinkRepository.delete({objectKey});
         if (deleteResult.affected === 0) {
             throw new BadRequestException();
         }

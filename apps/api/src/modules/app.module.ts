@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {InjectDataSource, TypeOrmModule} from '@nestjs/typeorm';
+import {TypeOrmModule} from '@nestjs/typeorm';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {UserModule} from "./user/user.module";
 import {AuthModule} from "./auth/auth.module";
@@ -35,10 +35,10 @@ export default new DataSource(dataSourceOptions);
                 password: configService.get('DATABASE_PASSWORD'),
                 database: configService.get('DATABASE_NAME'),
                 entities: [],
-                synchronize: configService.get('PRODUCTION_FLAG') === 'false',
+                synchronize: false,
                 autoLoadEntities: configService.get('PRODUCTION_FLAG') === 'false',
                 migrations:['dist/migrations/*{.ts,.js}'],
-                migrationsRun:true,
+                migrationsRun:false,
             }),
 
             imports: [ConfigModule],
