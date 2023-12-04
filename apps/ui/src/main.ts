@@ -1,7 +1,8 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import {bootstrapApplication} from "@angular/platform-browser";
 import {HomePageComponent} from "./app/components/pages/home-page/home-page.component";
 
 
-platformBrowserDynamic().bootstrapModule(HomePageComponent)
-  .catch(err => console.error(err));
+bootstrapApplication(HomePageComponent, {
+  providers: []
+});
