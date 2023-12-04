@@ -36,4 +36,14 @@ describe("AuthController e2e",()=>{
             .send(loginUserDto)
             .expect(401);
     })
+    it('should login a user successfully', async()=>{
+        const loginUserDto:LoginUserDto=new LoginUserDto({
+            email:"RealKenshinHimura@gmail.com",
+            password:"RealKenshinHimuraPassword112?"
+        });
+        return request(app.getHttpServer())
+            .post('/api/auth/login')
+            .send(loginUserDto)
+            .expect(200);
+    })
 })
