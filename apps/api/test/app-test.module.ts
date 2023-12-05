@@ -5,24 +5,6 @@ import {UserModule} from "../src/modules/user/user.module";
 import {AuthModule} from "../src/modules/auth/auth.module";
 import {FileLinkModule} from "../src/modules/file-link/file-link.module";
 import {PortfolioEntryModule} from "../src/modules/portofolio-entry/portfolio-entry.module";
-import {DataSource, DataSourceOptions} from "typeorm";
-import * as dotenv from 'dotenv';
-import * as dotenvExpand from 'dotenv-expand';
-
-dotenvExpand.expand(dotenv.config());
-export const dataSourceOptions: DataSourceOptions = ({
-    type: 'postgres',
-    host: process.env.DATABASE_HOST,
-    port: parseInt(process.env.DATABASE_PORT),
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    migrations: ['dist/migrations/*{.ts,.js}'],
-    migrationsRun: true,
-    synchronize: true,
-});
-
-export default new DataSource(dataSourceOptions);
 
 @Module({
     imports: [
@@ -38,16 +20,16 @@ export default new DataSource(dataSourceOptions);
                 schema:configService.get("DATABASE_SCHEMA_TEST"),
                 entities: [],
                 synchronize: configService.get('PRODUCTION_FLAG') === 'false',
-                autoLoadEntities: configService.get('PRODUCTION_FLAG') === 'false',
-                runMigrations: true,
+                autoLoadEntities: true,
             }),
             imports: [ConfigModule],
             inject: [ConfigService],
         }),
         UserModule,
         AuthModule,
-        FileLinkModule,
         PortfolioEntryModule,
+        FileLinkModule,
+
     ],
     controllers: [],
     providers: [],

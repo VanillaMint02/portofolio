@@ -1,4 +1,4 @@
 export enum FileLinkMode {
-    LOGO = "LOGO",
-    IMAGE = "IMAGE",
+  LOGO = 'LOGO',
+  IMAGE = 'IMAGE',
 }

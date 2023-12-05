@@ -1,12 +1,12 @@
-import {ApiProperty} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class JwtPayloadDto {
-    @ApiProperty()
-    email: string;
+  @ApiProperty()
+  email: string;
 
-    @ApiProperty()
-    userId: string;
+  @ApiProperty()
+  userId: string;
 
-    @ApiProperty()
-    sub: string;
+  @ApiProperty()
+  sub: string;
 }

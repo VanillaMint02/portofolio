@@ -1,4 +1,4 @@
 export enum PortfolioEntryStatus {
-    HIDDEN = 'HIDDEN',
-    PUBLISHED = 'PUBLISHED'
+  HIDDEN = 'HIDDEN',
+  PUBLISHED = 'PUBLISHED',
 }
