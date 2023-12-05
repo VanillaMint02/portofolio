@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -9,6 +10,7 @@ import {
 import { FileLinkDomain } from '../../file-link/domain/file-link.domain';
 import { PortfolioEntryStatus } from './portfolio-entry-status';
 import { UserDomain } from '../../user/domain/user.domain';
+import { JoinTable } from 'typeorm/browser';
 
 @Entity()
 export class PortfolioEntryDomain {
@@ -31,10 +33,10 @@ export class PortfolioEntryDomain {
   })
   user: UserDomain;
 
-  @OneToOne(() => FileLinkDomain, (logo) => logo.portfolio, {})
+  @OneToOne(() => FileLinkDomain, (fileLink) => fileLink.portfolio, {})
   logo?: FileLinkDomain;
 
-  @OneToMany(() => FileLinkDomain, (childFileLink) => childFileLink.parent, {})
+  @OneToMany(() => FileLinkDomain, (childFileLink) => childFileLink.parent)
   imageGallery?: FileLinkDomain[];
 
   @Column({
@@ -53,6 +55,8 @@ export class PortfolioEntryDomain {
       this.customerLink = values.customerLink;
       this.user = values.user;
       this.status = values.status;
+      this.logo = values.logo;
+      this.imageGallery = values.imageGallery;
     }
   }
 }

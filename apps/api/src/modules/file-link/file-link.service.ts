@@ -18,7 +18,6 @@ export class FileLinkService {
   constructor(
     @InjectRepository(FileLinkDomain)
     private fileLinkRepository: Repository<FileLinkDomain>,
-    private portfolioEntryService: PortfolioEntryService,
   ) {}
 
   async getFileLinkForPortfolioId(
@@ -33,20 +32,14 @@ export class FileLinkService {
     }
   }
 
-  async createLogo(createFileLinkDto: CreateFileLinkDto): Promise<FileLinkDto> {
-    this.validateFileLinkMode(createFileLinkDto.mode);
-    const foundPortfolioEntryDto = await this.portfolioEntryService.findOneById(
-      createFileLinkDto.portfolioEntryId,
-    );
-    const portfolioEntry = PortfolioEntryMapper.mapToDomain(
-      foundPortfolioEntryDto,
-    );
+  async createLogo(
+    createFileLinkDto: CreateFileLinkDto,
+    mode: FileLinkMode,
+  ): Promise<FileLinkDto> {
     try {
-      const savedFileLink = FileLinkMapper.mapCreateFileLinkDtoToDomain(
-        createFileLinkDto,
-        portfolioEntry,
-        createFileLinkDto.mode,
-      );
+      this.validateFileLinkMode(mode);
+      const savedFileLink =
+        FileLinkMapper.mapCreateFileLinkDtoToDomain(createFileLinkDto);
       await this.fileLinkRepository.save(savedFileLink);
       return FileLinkMapper.mapToDto(savedFileLink);
     } catch (error) {
@@ -66,14 +59,23 @@ export class FileLinkService {
       throw new BadRequestException();
     }
   }
-
-  private async getFileLinkForLogo(
+  public async readOneByPortfolioEntryId(
     portfolioEntryId: string,
-  ): Promise<FileLinkDto> {
+  ): Promise<FileLinkDomain> {
     const foundFileLink = await this.fileLinkRepository.findOne({
       where: { portfolio: { id: portfolioEntryId } },
       relations: ['portfolio'],
     });
+    if (!foundFileLink) {
+      return null;
+    }
+    return foundFileLink;
+  }
+  public async getFileLinkForLogo(
+    portfolioEntryId: string,
+  ): Promise<FileLinkDto> {
+    const foundFileLink =
+      await this.readOneByPortfolioEntryId(portfolioEntryId);
     if (!foundFileLink) {
       throw new NotFoundException();
     }

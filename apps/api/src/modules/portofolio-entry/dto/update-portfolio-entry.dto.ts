@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PortfolioEntryStatus } from '../domain/portfolio-entry-status';
-import { FileLinkDto } from '../../file-link/dto/file-link.dto';
+import { CreateFileLinkDto } from '../../file-link/dto/create-file-link.dto';
 
-export class PortfolioEntryDto {
+export class UpdatePortfolioEntryDto {
   @ApiProperty({
     description: 'Automatically generated, its the ID of the portfolio entry',
     example: 'A string that is going to be automatically generated',
     required: true,
   })
-  id?: string;
+  id: string;
   @ApiProperty({
     description: 'The title of the portfolio entry',
     example: 'Aquarium',
@@ -35,25 +35,25 @@ export class PortfolioEntryDto {
   status: PortfolioEntryStatus;
   @ApiProperty({
     description: 'The logo of this portfolio entry',
-    example: 'alhambra.png',
+    example: '{"objectKey":"assets","filename":"alhambra.png","mode":"IMAGE"}',
     required: true,
   })
-  logo: FileLinkDto;
+  logo: CreateFileLinkDto;
   @ApiProperty({
-    description: 'The image gallery of this portfolio entry',
-    required: true,
+    description: 'An array of images ready to be saved in the gallery',
+    example:
+      '[{"objectKey":"assets","filename":"alhambra.png","mode":"IMAGE"},{"objectKey":"assets","filename":"alhambra.png","mode":"IMAGE"}]',
   })
-  imageGallery: FileLinkDto[];
+  imageGallery: CreateFileLinkDto[];
 
-  constructor(values: Partial<PortfolioEntryDto>) {
+  constructor(values: Partial<UpdatePortfolioEntryDto>) {
     if (values) {
       this.id = values.id;
       this.title = values.title;
       this.description = values.description;
       this.customerLink = values.customerLink;
-      this.status = values.status;
-      this.imageGallery = values.imageGallery;
       this.logo = values.logo;
+      this.imageGallery = values.imageGallery;
     }
   }
 }

@@ -1,6 +1,6 @@
 import { QueryRunner } from 'typeorm';
 
-export class PopulateSchemaService {
+export class PopulateSchemaUtils {
   public static async populateUser(
     schemaName: string,
     queryRunner: QueryRunner,

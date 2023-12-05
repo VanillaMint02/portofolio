@@ -12,6 +12,9 @@ import { PortfolioEntryStatus } from './domain/portfolio-entry-status';
 import { CreatePortfolioEntryDto } from './dto/create-portfolio-entry.dto';
 import { UserService } from '../user/user.service';
 import { UserMapper } from '../user/mappers/user.mapper';
+import { UpdatePortfolioEntryDto } from './dto/update-portfolio-entry.dto';
+import { FileLinkService } from '../file-link/file-link.service';
+import { FileLinkMode } from '../file-link/domain/file-link.mode';
 
 @Injectable()
 export class PortfolioEntryService {
@@ -19,34 +22,50 @@ export class PortfolioEntryService {
     @InjectRepository(PortfolioEntryDomain)
     private portfolioEntryRepository: Repository<PortfolioEntryDomain>,
     private userService: UserService,
+    private fileLinkService: FileLinkService,
   ) {}
 
   async findOneById(portfolioEntryId: string): Promise<PortfolioEntryDto> {
     const foundModel = await this.readOneById(portfolioEntryId);
     return PortfolioEntryMapper.mapToDto(foundModel);
   }
-
+  private async addLogosToModels(
+    models: PortfolioEntryDomain[],
+  ): Promise<PortfolioEntryDomain[]> {
+    for (const model of models) {
+      const logo = await this.fileLinkService.readOneByPortfolioEntryId(
+        model.id,
+      );
+      if (!logo) {
+        model.logo = null;
+      } else model.logo = logo;
+    }
+    return models;
+  }
   async getAllPublishedPortfolioEntries(): Promise<PortfolioEntryDto[]> {
     const foundModels = await this.portfolioEntryRepository.find({
       where: {
         status: PortfolioEntryStatus.PUBLISHED,
       },
-      relations: ['user'],
+      relations: ['user', 'imageGallery'],
     });
+
     if (!foundModels) {
       return [];
     }
-    return foundModels.map((model) => PortfolioEntryMapper.mapToDto(model));
+    const mappedModels = await this.addLogosToModels(foundModels);
+    return mappedModels.map((model) => PortfolioEntryMapper.mapToDto(model));
   }
 
   async getAllPortfolioEntries(): Promise<PortfolioEntryDto[]> {
     const foundModels = await this.portfolioEntryRepository.find({
-      relations: ['user'],
+      relations: ['user', 'imageGallery'],
     });
     if (!foundModels) {
       return [];
     }
-    return foundModels.map((model) => PortfolioEntryMapper.mapToDto(model));
+    const mappedModels = await this.addLogosToModels(foundModels);
+    return mappedModels.map((model) => PortfolioEntryMapper.mapToDto(model));
   }
 
   async createPortfolioEntry(
@@ -56,7 +75,7 @@ export class PortfolioEntryService {
       createPortfolioEntryDto.ownerId,
     );
     if (!foundUserModel) {
-      throw new BadRequestException();
+      throw new NotFoundException();
     }
     try {
       const portfolioEntryDomain =
@@ -64,6 +83,8 @@ export class PortfolioEntryService {
           createPortfolioEntryDto,
         );
       portfolioEntryDomain.user = UserMapper.mapToDomain(foundUserModel);
+      portfolioEntryDomain.logo = null;
+      portfolioEntryDomain.imageGallery = [];
       const savedPortfolioEntryDomain =
         await this.portfolioEntryRepository.save(portfolioEntryDomain);
       return PortfolioEntryMapper.mapToDto(savedPortfolioEntryDomain);
@@ -73,12 +94,21 @@ export class PortfolioEntryService {
   }
 
   async updatePortfolioEntry(
-    portfolioEntryDto: PortfolioEntryDto,
+    updatePortfolioEntryDto: UpdatePortfolioEntryDto,
   ): Promise<PortfolioEntryDto> {
-    this.validatePortfolioStatus(portfolioEntryDto.status);
-    await this.findOneById(portfolioEntryDto.id);
+    this.validatePortfolioStatus(updatePortfolioEntryDto.status);
+    await this.readOneById(updatePortfolioEntryDto.id);
     const savedPortfolioEntry =
-      PortfolioEntryMapper.mapToDomain(portfolioEntryDto);
+      PortfolioEntryMapper.mapUpdatePortfolioEntryDtoToDomain(
+        updatePortfolioEntryDto,
+      );
+    for (const image of updatePortfolioEntryDto.imageGallery) {
+      await this.fileLinkService.createLogo(image, FileLinkMode.IMAGE);
+    }
+    await this.fileLinkService.createLogo(
+      updatePortfolioEntryDto.logo,
+      FileLinkMode.LOGO,
+    );
     await this.portfolioEntryRepository.save(savedPortfolioEntry);
     return PortfolioEntryMapper.mapToDto(savedPortfolioEntry);
   }
@@ -99,8 +129,9 @@ export class PortfolioEntryService {
   private async readOneById(
     portfolioEntryId: string,
   ): Promise<PortfolioEntryDomain> {
-    const foundModel = await this.portfolioEntryRepository.findOneBy({
-      id: portfolioEntryId,
+    const foundModel = await this.portfolioEntryRepository.findOne({
+      where: { id: portfolioEntryId },
+      relations: ['user', 'imageGallery'],
     });
     if (!foundModel) {
       throw new NotFoundException();

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import * as process from 'process';
-import { CreateSchemaService } from './utils/create-schema.service';
+import { CreateSchemaUtils } from './utils/create-schema.utils';
 
 export class CreatePublicAndTestSchemasMigration1701510232478
   implements MigrationInterface
@@ -9,22 +9,22 @@ export class CreatePublicAndTestSchemasMigration1701510232478
   private publicSchemaName = process.env.DATABASE_SCHEMA_PUBLIC;
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await CreateSchemaService.createSchemaWithSchemaName(
+    await CreateSchemaUtils.createSchemaWithSchemaName(
       this.publicSchemaName,
       queryRunner,
     );
-    await CreateSchemaService.createSchemaWithSchemaName(
+    await CreateSchemaUtils.createSchemaWithSchemaName(
       this.testSchemaName,
       queryRunner,
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await CreateSchemaService.dropTablesWithSchemaName(
+    await CreateSchemaUtils.dropTablesWithSchemaName(
       this.publicSchemaName,
       queryRunner,
     );
-    await CreateSchemaService.dropTablesWithSchemaName(
+    await CreateSchemaUtils.dropTablesWithSchemaName(
       this.testSchemaName,
       queryRunner,
     );

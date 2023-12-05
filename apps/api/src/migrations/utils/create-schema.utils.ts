@@ -1,6 +1,6 @@
 import { QueryRunner, Table, TableForeignKey } from 'typeorm';
 
-export class CreateSchemaService {
+export class CreateSchemaUtils {
   public static async createSchemaWithSchemaName(
     schemaName: string,
     queryRunner: QueryRunner,

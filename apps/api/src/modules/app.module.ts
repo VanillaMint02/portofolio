@@ -5,24 +5,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PortfolioEntryModule } from './portofolio-entry/portfolio-entry.module';
 import { FileLinkModule } from './file-link/file-link.module';
-import { DataSource, DataSourceOptions } from 'typeorm';
-import * as dotenv from 'dotenv';
-import * as dotenvExpand from 'dotenv-expand';
-
-dotenvExpand.expand(dotenv.config());
-export const dataSourceOptions: DataSourceOptions = {
-  type: 'postgres',
-  host: process.env.DATABASE_HOST,
-  port: parseInt(process.env.DATABASE_PORT),
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
-  migrations: ['dist/migrations/*{.ts,.js}'],
-  migrationsRun: true,
-  synchronize: true,
-};
-
-export default new DataSource(dataSourceOptions);
+import { MulterConfiguration } from '../utils/multer.config';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -40,11 +24,12 @@ export default new DataSource(dataSourceOptions);
         autoLoadEntities: true,
         migrations: ['dist/migrations/*{.ts,.js}'],
         migrationsRun: false,
+        logging: true,
       }),
-
       imports: [ConfigModule],
       inject: [ConfigService],
     }),
+    MulterModule.register(MulterConfiguration(process.env.UPDATE_FILE_PATH)),
     UserModule,
     AuthModule,
     PortfolioEntryModule,

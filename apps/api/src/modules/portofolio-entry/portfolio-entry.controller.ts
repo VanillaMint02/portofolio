@@ -14,6 +14,7 @@ import { PortfolioEntryService } from './portfolio-entry.service';
 import { PortfolioEntryDto } from './dto/portfolio-entry.dto';
 import { CreatePortfolioEntryDto } from './dto/create-portfolio-entry.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UpdatePortfolioEntryDto } from './dto/update-portfolio-entry.dto';
 
 @ApiBearerAuth()
 @ApiTags(PortfolioEntryConfig.SWAGGER_FEATURE)
@@ -59,10 +60,10 @@ export class PortfolioEntryController {
   @UseGuards(JwtAuthGuard)
   @Put()
   async updatePortfolioEntry(
-    @Body() portfolioEntryDto: PortfolioEntryDto,
+    @Body() updatePortfolioEntryDto: UpdatePortfolioEntryDto,
   ): Promise<PortfolioEntryDto> {
     return await this.portfolioEntryService.updatePortfolioEntry(
-      portfolioEntryDto,
+      updatePortfolioEntryDto,
     );
   }
 }

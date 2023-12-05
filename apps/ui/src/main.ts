@@ -1,9 +1,12 @@
 
 import {bootstrapApplication} from "@angular/platform-browser";
 import {HomePageComponent} from "./app/components/pages/home-page/home-page.component";
-import { provideAnimations } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-browser/animations';
+import {importProvidersFrom} from "@angular/core";
 
 
 bootstrapApplication(HomePageComponent, {
-  providers: [provideAnimations()]
+  providers: [provideAnimations(),
+    importProvidersFrom(BrowserAnimationsModule)
+  importProvidersFrom()]
 });

@@ -20,19 +20,12 @@ export class CreateFileLinkDto {
     required: true,
   })
   portfolioEntryId: string;
-  @ApiProperty({
-    description: 'The way the file should be uploaded',
-    example: 'LOGO/IMAGE',
-    required: true,
-  })
-  mode: FileLinkMode;
 
   constructor(values: Partial<CreateFileLinkDto>) {
     if (values) {
       this.objectKey = values.objectKey;
       this.filename = values.filename;
       this.portfolioEntryId = values.portfolioEntryId;
-      this.mode = values.mode;
     }
   }
 }
