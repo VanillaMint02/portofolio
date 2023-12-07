@@ -7,5 +7,8 @@ UI : Angular v17 --standalone
 DB : Postgres
 Docker
 # Running the project 
-API : Run the npm run:migration-run script for the db migrations, then run nest start to start the application
-UI : ng serve
+API :
+Run **docker-compose.up** to start the docker volume
+Run the **npm run:migration-run** script for the db migrations  
+Run **nest start** to start the application
+UI : Run **ng serve**
