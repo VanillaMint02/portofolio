@@ -1,7 +1,7 @@
-import {CommonModule} from '@angular/common';
-import {Component, Input, OnInit,} from '@angular/core';
-import {MatButton, MatButtonModule} from '@angular/material/button'
-import {MatIcon, MatIconModule} from "@angular/material/icon";
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,

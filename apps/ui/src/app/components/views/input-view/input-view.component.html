@@ -8,7 +8,7 @@
       matInput
       [formControl]="value"
       value="{{ value.value }}"
-      required="{{isMandatoryField}}"
+      required="{{ isMandatoryField }}"
       [type]="inputType === 'Password' ? 'password' : 'text'"
     />
     <mat-error *ngIf="value.invalid">{{ getErrorMessage() }}</mat-error>

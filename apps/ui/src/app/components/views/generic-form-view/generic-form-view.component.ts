@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output, } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {GenericButtonViewComponent} from "../generic-button-view/generic-button-view.component";
-import {InputViewComponent} from "../input-view/input-view.component";
-import {InputComponent} from "../../container/input/input.component";
+import { GenericButtonViewComponent } from '../generic-button-view/generic-button-view.component';
+import { InputViewComponent } from '../input-view/input-view.component';
+import { InputComponent } from '../../container/input/input.component';
 
 @Component({
   selector: 'generic-form',
@@ -23,6 +23,5 @@ export class GenericFormViewComponent {
   @Input() formTitle?: string;
   @Input() confirmationButtonName!: string;
   @Input() formGroup!: FormGroup;
-  @Output() buttonEvent= new EventEmitter<void>;
-
+  @Output() buttonEvent = new EventEmitter<void>();
 }

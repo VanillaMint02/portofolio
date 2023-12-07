@@ -8,10 +8,9 @@ describe('EditPortfolioPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditPortfolioPageComponent]
-    })
-    .compileComponents();
-    
+      imports: [EditPortfolioPageComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(EditPortfolioPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

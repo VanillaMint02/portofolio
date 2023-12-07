@@ -8,10 +8,9 @@ describe('PortfolioCardViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PortfolioCardViewComponent]
-    })
-    .compileComponents();
-    
+      imports: [PortfolioCardViewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PortfolioCardViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

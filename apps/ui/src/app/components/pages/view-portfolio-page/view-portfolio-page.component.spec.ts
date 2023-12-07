@@ -8,10 +8,9 @@ describe('ViewPortfolioPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ViewPortfolioPageComponent]
-    })
-    .compileComponents();
-    
+      imports: [ViewPortfolioPageComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ViewPortfolioPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

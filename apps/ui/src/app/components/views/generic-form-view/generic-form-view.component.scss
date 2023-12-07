@@ -1,14 +1,12 @@
-
 .formStyle {
   width: 25rem;
-  height:fit-content;
+  height: fit-content;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  h1{
+  h1 {
     text-align: center;
   }
-  box-shadow:inset 0 0 1rem 0.2rem;
-  padding:3rem 3rem 3rem 3rem;
+  box-shadow: inset 0 0 1rem 0.2rem;
+  padding: 3rem 3rem 3rem 3rem;
 }
-

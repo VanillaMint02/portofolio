@@ -1,6 +1,8 @@
-
 <div class="imageTextButton">
-  <div *ngIf="buttonName != undefined; else onlyIconButton" class="button-wrapper">
+  <div
+    *ngIf="buttonName != undefined; else onlyIconButton"
+    class="button-wrapper"
+  >
     <button mat-raised-button color="primary">
       <mat-icon *ngIf="iconName != undefined">{{ iconName }}</mat-icon>
       {{ buttonName }}

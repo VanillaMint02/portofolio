@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Router } from '@angular/router';
-import {AuthService} from "../services/auth.service";
-import {RouterService} from "../services/router.service";
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { RouterService } from '../services/router.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import {RouterService} from "../services/router.service";
 export class AuthGuard {
   constructor(
     private authService: AuthService,
-    private routerService: RouterService
+    private routerService: RouterService,
   ) {}
 
   canActivate(): boolean {

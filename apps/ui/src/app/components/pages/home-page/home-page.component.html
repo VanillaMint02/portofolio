@@ -1,15 +1,12 @@
 <app-header
   [onlyHasHeader]="onlyHasHeader"
-  [isUserAuthenticated]="isAuthenticated">
+  [isUserAuthenticated]="isAuthenticated"
+>
 </app-header>
 <div *ngFor="let portfolioEntry of portfolioEntries" class="wrapper">
-  <app-portfolio-card-view [portfolioEntry]="portfolioEntry"
-                           [isAuthenticated]="isAuthenticated">
+  <app-portfolio-card-view
+    [portfolioEntry]="portfolioEntry"
+    [isAuthenticated]="isAuthenticated"
+  >
   </app-portfolio-card-view>
 </div>
-
-
-
-
-
-

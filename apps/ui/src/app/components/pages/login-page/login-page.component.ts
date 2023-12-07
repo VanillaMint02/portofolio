@@ -1,11 +1,11 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import {HeaderViewComponent} from "../../views/header-view/header-view.component";
-import {GenericFormViewComponent} from "../../views/generic-form-view/generic-form-view.component";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {InputComponent} from "../../container/input/input.component";
-import {AuthService} from "../../../services/auth.service";
-import {RouterService} from "../../../services/router.service";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { HeaderViewComponent } from '../../views/header-view/header-view.component';
+import { GenericFormViewComponent } from '../../views/generic-form-view/generic-form-view.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { InputComponent } from '../../container/input/input.component';
+import { AuthService } from '../../../services/auth.service';
+import { RouterService } from '../../../services/router.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -14,18 +14,20 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
   styleUrl: 'login-page.component.scss',
   imports: [HeaderViewComponent, GenericFormViewComponent],
   template: `
-      <app-header [onlyHasHeader]="true" [isUserAuthenticated]="isAuthenticated"
-      ></app-header>
-      <div class="login-form-wrapper">
-          <generic-form
-                  [givenInputs]="loginInputs"
-                  [formTitle]="'Login'"
-                  [confirmationButtonName]="'Login'"
-                  [formGroup]="loginFormGroup"
-                  (buttonEvent)="onLoginClick()"
-          ></generic-form>
-      </div>
-  `
+    <app-header
+      [onlyHasHeader]="true"
+      [isUserAuthenticated]="isAuthenticated"
+    ></app-header>
+    <div class="login-form-wrapper">
+      <generic-form
+        [givenInputs]="loginInputs"
+        [formTitle]="'Login'"
+        [confirmationButtonName]="'Login'"
+        [formGroup]="loginFormGroup"
+        (buttonEvent)="onLoginClick()"
+      ></generic-form>
+    </div>
+  `,
 })
 export class LoginPageComponent implements OnInit {
   password?: FormControl;
@@ -33,16 +35,18 @@ export class LoginPageComponent implements OnInit {
   loginInputs!: InputComponent[];
   loginFormGroup!: FormGroup;
   onlyHasHeader!: boolean;
-  isAuthenticated!:boolean;
+  isAuthenticated!: boolean;
 
-  constructor(private authService: AuthService, private routerService: RouterService) {
-  }
+  constructor(
+    private authService: AuthService,
+    private routerService: RouterService,
+  ) {}
 
   ngOnInit(): void {
     this.email = new FormControl('', [Validators.required, Validators.email]);
     this.password = new FormControl('', Validators.required);
     this.onlyHasHeader = true;
-    this.isAuthenticated=this.authService.getAuthenticated();
+    this.isAuthenticated = this.authService.getAuthenticated();
     this.loginFormGroup = new FormGroup({
       email: this.email,
       password: this.password,
@@ -66,12 +70,14 @@ export class LoginPageComponent implements OnInit {
   }
 
   onLoginClick() {
-    console.log(this.authService.login(
-      {
-        email: this.email?.value,
-        password: this.password?.value
-      })
-      .pipe(untilDestroyed(this))
-      .subscribe(this.routerService.navigateToHome));
+    console.log(
+      this.authService
+        .login({
+          email: this.email?.value,
+          password: this.password?.value,
+        })
+        .pipe(untilDestroyed(this))
+        .subscribe(this.routerService.navigateToHome),
+    );
   }
 }

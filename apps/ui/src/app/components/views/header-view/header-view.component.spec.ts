@@ -8,10 +8,9 @@ describe('HeaderViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderViewComponent]
-    })
-    .compileComponents();
-    
+      imports: [HeaderViewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(HeaderViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

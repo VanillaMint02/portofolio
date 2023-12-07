@@ -1,5 +1,5 @@
 <form class="formStyle" [formGroup]="formGroup">
-  <h1 *ngIf="formTitle!=undefined">{{ formTitle }}</h1>
+  <h1 *ngIf="formTitle != undefined">{{ formTitle }}</h1>
   <app-input
     *ngFor="let input of givenInputs"
     [inputType]="input.inputType"
@@ -8,8 +8,9 @@
     [value]="input.value"
   >
   </app-input>
-  <div *ngIf="confirmationButtonName!=undefined">
-    <generic-button (click)="buttonEvent.emit()"
+  <div *ngIf="confirmationButtonName != undefined">
+    <generic-button
+      (click)="buttonEvent.emit()"
       [buttonName]="confirmationButtonName"
     ></generic-button>
   </div>
