@@ -18,7 +18,6 @@ export class UserService {
     const foundModel = await this.readUserDomainByEmail(email);
     return UserMapper.mapToDto(foundModel);
   }
-
   async checkCredentials(loginUserDto: LoginUserDto): Promise<boolean> {
     const foundModel = await this.userDomainRepository.findOneBy({
       email: loginUserDto.email,

@@ -32,7 +32,6 @@ export class LoginPageComponent implements OnInit {
   email?: FormControl;
   loginInputs!: InputComponent[];
   loginFormGroup!: FormGroup;
-  genericFormGroupArray!: GenericFormViewComponent[];
   onlyHasHeader!: boolean;
   isAuthenticated!:boolean;
 
@@ -64,17 +63,6 @@ export class LoginPageComponent implements OnInit {
         formControlName: '',
       },
     ];
-
-
-    this.genericFormGroupArray = [
-      {
-        givenInputs: this.loginInputs,
-        formTitle: 'Login',
-        confirmationButtonName: 'Login',
-        formGroup: this.loginFormGroup,
-        buttonEvent: new EventEmitter<void>(),
-      },
-    ];
   }
 
   onLoginClick() {
@@ -84,6 +72,6 @@ export class LoginPageComponent implements OnInit {
         password: this.password?.value
       })
       .pipe(untilDestroyed(this))
-      .subscribe());
+      .subscribe(this.routerService.navigateToHome));
   }
 }

@@ -32,7 +32,7 @@ export class FileLinkService {
     }
   }
 
-  async createLogo(
+  async createFileLink(
     createFileLinkDto: CreateFileLinkDto,
     mode: FileLinkMode,
   ): Promise<FileLinkDto> {
@@ -40,6 +40,11 @@ export class FileLinkService {
       this.validateFileLinkMode(mode);
       const savedFileLink =
         FileLinkMapper.mapCreateFileLinkDtoToDomain(createFileLinkDto);
+      if (mode === 'LOGO') {
+        savedFileLink.portfolio.id = createFileLinkDto.portfolioEntryId;
+      } else {
+        savedFileLink.parent.id = createFileLinkDto.portfolioEntryId;
+      }
       await this.fileLinkRepository.save(savedFileLink);
       return FileLinkMapper.mapToDto(savedFileLink);
     } catch (error) {

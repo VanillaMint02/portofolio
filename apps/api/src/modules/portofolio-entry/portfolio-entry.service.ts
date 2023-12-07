@@ -103,12 +103,15 @@ export class PortfolioEntryService {
         updatePortfolioEntryDto,
       );
     for (const image of updatePortfolioEntryDto.imageGallery) {
-      await this.fileLinkService.createLogo(image, FileLinkMode.IMAGE);
+      await this.fileLinkService.createFileLink(image, FileLinkMode.IMAGE);
     }
-    await this.fileLinkService.createLogo(
+    await this.fileLinkService.createFileLink(
       updatePortfolioEntryDto.logo,
       FileLinkMode.LOGO,
     );
+    for (const image of updatePortfolioEntryDto.imageGallery) {
+      await this.fileLinkService.createFileLink(image, FileLinkMode.IMAGE);
+    }
     await this.portfolioEntryRepository.save(savedPortfolioEntry);
     return PortfolioEntryMapper.mapToDto(savedPortfolioEntry);
   }

@@ -16,8 +16,8 @@ export class RouterService{
     this.router.navigateByUrl(`/${uiPaths.HOME_PAGE_FEATURE}`);
   }
 
-  public navigateToPortfolioView():void{
-    this.router.navigateByUrl(`/${uiPaths.VIEW_PORTFOLIO_FEATURE}`);
+  public navigateToPortfolioView(id:string):void{
+    this.router.navigateByUrl(`/${uiPaths.VIEW_PORTFOLIO_FEATURE}/${id}`);
   }
   public navigateToPortfolioEdit():void{
     this.router.navigateByUrl(`${uiPaths.EDIT_PORTFOLIO_FEATURE}`);

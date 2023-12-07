@@ -3,4 +3,5 @@ export interface PortfolioEntry {
   title:string;
   description:string;
   userId?:string;
+  customerLink?:string;
 }
