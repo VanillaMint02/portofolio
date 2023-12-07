@@ -1,0 +1,10 @@
+
+.entry-wrapper{
+  width: 12rem;
+}
+@media screen and (max-width:500px){
+ .entry-wrapper{
+   width: 100%;
+   min-height:20rem;
+ }
+}

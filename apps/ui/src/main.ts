@@ -1,12 +1,15 @@
-
-import {bootstrapApplication} from "@angular/platform-browser";
-import {HomePageComponent} from "./app/components/pages/home-page/home-page.component";
-import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-browser/animations';
+import {bootstrapApplication, BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {importProvidersFrom} from "@angular/core";
+import {PreloadAllModules, provideRouter, withDebugTracing, withPreloading} from "@angular/router";
+import {routes} from "./app/utils/routes";
+import {AppComponent} from "./app/components/app.component";
 
 
-bootstrapApplication(HomePageComponent, {
-  providers: [provideAnimations(),
-    importProvidersFrom(BrowserAnimationsModule)
-  importProvidersFrom()]
-});
+bootstrapApplication(AppComponent,
+  {providers:[importProvidersFrom(BrowserAnimationsModule),
+      provideRouter(routes,
+        withPreloading(PreloadAllModules),
+        withDebugTracing(),
+      ),]})
+  .catch(error=>console.log(error));

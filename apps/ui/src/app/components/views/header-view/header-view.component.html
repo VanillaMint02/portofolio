@@ -1,0 +1,15 @@
+<mat-card>
+</mat-card>
+<div class="header-component" *ngIf="isUserAuthenticated && !onlyHasHeader">
+  <mat-card-title>
+    <div class="asset-wrapper">authenticated user</div>
+  </mat-card-title>
+</div>
+<div class="header-component" *ngIf="!isUserAuthenticated && !onlyHasHeader">
+  <generic-button [buttonName]="'login'" (click)="goToLogin()" class="asset-wrapper"></generic-button>
+</div>
+<div class="logo-only-header" *ngIf="onlyHasHeader">
+
+  <div class="logo-wrapper"> Logo but on the left</div>
+  <generic-button [buttonName]="'home'" (click)="goHome()" class="asset-wrapper"></generic-button>
+</div>

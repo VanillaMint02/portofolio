@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewPageComponent } from './view-page.component';
+import { HeaderViewComponent } from './header-view.component';
 
-describe('ViewPageComponent', () => {
-  let component: ViewPageComponent;
-  let fixture: ComponentFixture<ViewPageComponent>;
+describe('HeaderViewComponent', () => {
+  let component: HeaderViewComponent;
+  let fixture: ComponentFixture<HeaderViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ViewPageComponent]
+      imports: [HeaderViewComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ViewPageComponent);
+    fixture = TestBed.createComponent(HeaderViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

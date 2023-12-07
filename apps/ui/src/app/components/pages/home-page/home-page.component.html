@@ -1,5 +1,15 @@
+<app-header
+  [onlyHasHeader]="onlyHasHeader"
+  [isUserAuthenticated]="isAuthenticated">
+</app-header>
+<div *ngFor="let portfolioEntry of portfolioEntries" class="wrapper">
+  <app-portfolio-card-view [portfolioEntry]="portfolioEntry"
+                           [isAuthenticated]="isAuthenticated">
+  </app-portfolio-card-view>
+</div>
 
-<generic-button
-[buttonName]="login">
 
-</generic-button>
+
+
+
+

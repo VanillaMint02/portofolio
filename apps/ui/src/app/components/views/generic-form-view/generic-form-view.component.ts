@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output, } from '@angular/core';
-import { InputComponent } from '../../container/input/input.component';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {GenericButtonViewComponent} from "../generic-button-view/generic-button-view.component";
+import {InputViewComponent} from "../input-view/input-view.component";
+import {InputComponent} from "../../container/input/input.component";
 
 @Component({
-  selector: 'generic-form-view',
+  selector: 'generic-form',
   templateUrl: './generic-form-view.component.html',
   styleUrls: ['./generic-form-view.component.scss'],
   imports: [

@@ -1,0 +1,16 @@
+<div class="inputFormWrapper">
+  <mat-form-field class="inputWrapper">
+    <mat-label>
+      {{ inputType }}
+    </mat-label>
+
+    <input
+      matInput
+      [formControl]="value"
+      value="{{ value.value }}"
+      required="{{isMandatoryField}}"
+      [type]="inputType === 'Password' ? 'password' : 'text'"
+    />
+    <mat-error *ngIf="value.invalid">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+</div>
