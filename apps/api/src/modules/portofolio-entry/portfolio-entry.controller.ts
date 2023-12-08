@@ -7,7 +7,9 @@ import {
   Param,
   Post,
   Put,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PortfolioEntryService } from './portfolio-entry.service';
@@ -15,6 +17,7 @@ import { PortfolioEntryDto } from './dto/portfolio-entry.dto';
 import { CreatePortfolioEntryDto } from './dto/create-portfolio-entry.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdatePortfolioEntryDto } from './dto/update-portfolio-entry.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiBearerAuth()
 @ApiTags(PortfolioEntryConfig.SWAGGER_FEATURE)
@@ -61,7 +64,9 @@ export class PortfolioEntryController {
   @Put()
   async updatePortfolioEntry(
     @Body() updatePortfolioEntryDto: UpdatePortfolioEntryDto,
+    @UploadedFile() file: any,
   ): Promise<PortfolioEntryDto> {
+    console.log(file);
     return await this.portfolioEntryService.updatePortfolioEntry(
       updatePortfolioEntryDto,
     );
